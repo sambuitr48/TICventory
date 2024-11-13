@@ -1,16 +1,17 @@
-package co.cue.edu.ticventory.ticventory.inventory;
-/**
- * Esta clase es un Builder para crear objetos de tipo Resource.
- * El patrón Builder se utiliza para simplificar la creación de un objeto complejo (Resource) al permitir la construcción paso a paso.
- * Proporciona métodos encadenados para establecer los diferentes atributos del recurso y finalmente construirlo.
- */
+package co.cue.edu.ticventory.ticventory.inventory.builder;
+
+import co.cue.edu.ticventory.ticventory.inventory.model.Resource;
+import co.cue.edu.ticventory.ticventory.inventory.model.ResourceType;
+import co.cue.edu.ticventory.ticventory.inventory.domain.ResourceStatus;
+import co.cue.edu.ticventory.ticventory.inventory.model.Sede;
+
 public class ResourceBuilder {
     private String code;
     private String description;
     private ResourceType resourceType;
     private Sede sedeLocation;
     private String brand;
-    private ResourceState state;
+    private ResourceStatus state;
 
     public ResourceBuilder setCode(String code) {
         this.code = code;
@@ -37,7 +38,7 @@ public class ResourceBuilder {
         return this;
     }
 
-    public ResourceBuilder setState(ResourceState state) {
+    public ResourceBuilder setState(ResourceStatus state) {
         this.state = state;
         return this;
     }

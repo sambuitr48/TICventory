@@ -1,7 +1,6 @@
 package co.cue.edu.ticventory.ticventory.loan;
 
 import co.cue.edu.ticventory.ticventory.people.Person;
-import co.cue.edu.ticventory.ticventory.inventory.Resource;
 
 import java.util.Date;
 /**

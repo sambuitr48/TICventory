@@ -10,7 +10,6 @@ public class AuthProxy {
     }
 
     public boolean authenticate(String username, String password) {
-        // Lógica de control de acceso aquí
         return authService.login(username, password);
     }
 }
