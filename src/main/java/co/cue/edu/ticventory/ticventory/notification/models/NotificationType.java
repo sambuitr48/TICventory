@@ -1,5 +1,7 @@
-package co.cue.edu.ticventory.ticventory.notification;
-
+package co.cue.edu.ticventory.ticventory.notification.models;
+/**
+ * Enum que define los diferentes tipos de notificación disponibles.
+ */
 public enum NotificationType {
     VENCIMIENTO(0),
     PRESTAMO(1),
