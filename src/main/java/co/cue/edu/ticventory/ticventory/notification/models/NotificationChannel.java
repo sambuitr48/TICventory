@@ -1,5 +1,7 @@
-package co.cue.edu.ticventory.ticventory.notification;
-
+package co.cue.edu.ticventory.ticventory.notification.models;
+/**
+ * Enum que define los diferentes canales de notificación disponibles.
+ */
 public enum NotificationChannel {
     SISTEMA_INTERNO(0),
     CORREO(1),

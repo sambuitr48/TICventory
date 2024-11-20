@@ -1,4 +1,13 @@
-package co.cue.edu.ticventory.ticventory.notification;
+/**
+
+ * Clase que representa una plantilla de mensaje para notificaciones.
+ * Patrón de diseño utilizado: Soporte para Factory (se utiliza como parte del patrón Factory).
+ */
+
+package co.cue.edu.ticventory.ticventory.notification.service;
+
+import co.cue.edu.ticventory.ticventory.notification.models.NotificationType;
+
 /**
  * Clase que representa una plantilla de mensaje para notificaciones.
  * Esta clase permite crear un mensaje basado en un tipo de notificación
