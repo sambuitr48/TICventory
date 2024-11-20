@@ -1,6 +1,6 @@
 package co.cue.edu.ticventory.ticventory.loan;
 
-import co.cue.edu.ticventory.ticventory.inventory.Resource;
+import co.cue.edu.ticventory.ticventory.inventory.model.Resource;
 import co.cue.edu.ticventory.ticventory.people.Sedes;
 
 import java.util.List;
