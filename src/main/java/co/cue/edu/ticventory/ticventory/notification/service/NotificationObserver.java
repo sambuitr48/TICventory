@@ -35,7 +35,14 @@ public class NotificationObserver {
     public void notifyObservers(String message) {
         for (NotificationChannel channel : channels) {
             System.out.println("Enviando mensaje a través de: " + channel);
-            // Aquí se pueden implementar los detalles de envío para cada canal.
+            // Aquí podrías agregar lógica real de envío
         }
+        clearChannels(); // Limpia los canales después de enviar la notificación
+    }
+
+//    este metodo sirve para que las notificaciones anteriores no queden guardadas
+//        al momento de mandar otras notificaciones
+    public void clearChannels() {
+        channels.clear();
     }
 }
