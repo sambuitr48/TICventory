@@ -1,53 +1,42 @@
 package co.cue.edu.ticventory.ticventory.notification.controllers;
 
-import co.cue.edu.ticventory.ticventory.notification.models.Notification;
-import co.cue.edu.ticventory.ticventory.notification.models.NotificationLog;
 import co.cue.edu.ticventory.ticventory.notification.mapping.NotificationRequest;
-import co.cue.edu.ticventory.ticventory.notification.service.NotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import co.cue.edu.ticventory.ticventory.notification.models.NotificationLog;
+import co.cue.edu.ticventory.ticventory.notification.services.NotificationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Controlador REST para manejar las notificaciones.
- * Expone endpoints para enviar notificaciones y consultar el historial.
- */
 @RestController
 @RequestMapping("/api/notifications")
 public class NotificationController {
 
+    // Inyección de dependencias para delegar la lógica de negocio al servicio correspondiente.
     private final NotificationService notificationService;
 
-    @Autowired
+    // **Patrón: Dependency Injection**
+    // Spring inyecta `NotificationService` en el constructor para promover el desacoplamiento.
     public NotificationController(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 
-    /**
-     * Endpoint para enviar una notificación.
-     *
-     * @param request Datos de la notificación.
-     * @return La notificación creada.
-     */
     @PostMapping("/send")
-    public Notification sendNotification(@RequestBody NotificationRequest request) {
-        Notification notification = notificationService.createAndSendNotification(
-                request.getRecipient(),
-                request.getMessage(),
-                request.getNotificationType(),
-                request.getChannel()
-        );
-        return notification;
+    public ResponseEntity<String> sendNotification(@RequestBody NotificationRequest request) {
+        // **Patrón: Facade**
+        // Este método simplifica el proceso de enviar notificaciones al cliente,
+        // delegando toda la lógica al servicio `NotificationService`.
+        notificationService.sendNotification(request);
+
+        // Respuesta directa para el cliente sin exponer la complejidad interna.
+        return ResponseEntity.ok("Notificación enviada");
     }
 
-    /**
-     * Endpoint para consultar el historial de notificaciones.
-     *
-     * @return Lista de logs de notificaciones.
-     */
     @GetMapping("/history")
     public List<NotificationLog> getNotificationHistory() {
+        // **Patrón: Facade**
+        // Este método proporciona una interfaz simple para obtener el historial de notificaciones,
+        // delegando al servicio toda la interacción con la capa de persistencia.
         return notificationService.getNotificationHistory();
     }
 }
