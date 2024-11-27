@@ -4,7 +4,7 @@ package co.cue.edu.ticventory.ticventory.loan;
  * Cada estado está asociado con un código de estado entero, que es útil para realizar operaciones
  * basadas en el estado del préstamo.
  */
-public enum LoanState {
+public enum LoanStateEnum {
     PRESTADO(0),
     DVUELTO(1),
     RETRASADO(2),
@@ -12,7 +12,7 @@ public enum LoanState {
 
     private final int stateCode;
 
-    LoanState(int stateCode) {
+    LoanStateEnum(int stateCode) {
         this.stateCode = stateCode;
     }
 
@@ -20,8 +20,8 @@ public enum LoanState {
         return stateCode;
     }
 
-    public static LoanState fromInt(int i) {
-        for (LoanState state : LoanState.values()) {
+    public static LoanStateEnum fromInt(int i) {
+        for (LoanStateEnum state : LoanStateEnum.values()) {
             if (state.getStateCode() == i) {
                 return state;
             }
