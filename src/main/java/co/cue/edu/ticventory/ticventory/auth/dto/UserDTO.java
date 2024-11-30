@@ -4,7 +4,7 @@ public class UserDTO {
     private String id;
     private String username;
     private String role;
-    private String password; // Campo password agregado
+    private String password;
 
     public UserDTO(String id, String username, String role, String password) {
         this.id = id;
@@ -13,6 +13,7 @@ public class UserDTO {
         this.password = password;
     }
 
+    // Getters and Setters
     public String getId() {
         return id;
     }
