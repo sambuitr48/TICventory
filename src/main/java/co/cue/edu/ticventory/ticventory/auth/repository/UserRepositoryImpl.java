@@ -1,6 +1,7 @@
 package co.cue.edu.ticventory.ticventory.auth.repository;
 
 import co.cue.edu.ticventory.ticventory.auth.model.User;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class UserRepositoryImpl implements UserRepository {
     private final Map<String, User> users = new HashMap<>();
 

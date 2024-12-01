@@ -1,5 +1,7 @@
 package co.cue.edu.ticventory.ticventory.auth.repository;
 
+
+
 import co.cue.edu.ticventory.ticventory.auth.model.User;
 
 import java.util.List;
@@ -10,6 +12,5 @@ public interface UserRepository {
     Optional<User> findByUsername(String username);
     void save(User user);
     void delete(String id);
-
     List<User> findAll();
 }

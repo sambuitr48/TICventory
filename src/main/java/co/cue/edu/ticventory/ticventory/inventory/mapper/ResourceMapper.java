@@ -11,17 +11,20 @@ public class ResourceMapper {
         dto.setCode(resource.getCode());
         dto.setDescription(resource.getDescription());
         dto.setType(resource.getResourceType());
-        dto.setLocation(resource.getSedeLocation().toString());
+        dto.setLocation(resource.getSedeLocation().name());
         dto.setBrand(resource.getBrand());
         dto.setStatus(resource.getState());
         return dto;
     }
 
     public static Resource toEntity(ResourceDTO dto) {
-        return new Resource(dto.getCode(), dto.getDescription(),
+        return new Resource(
+                dto.getCode(),
+                dto.getDescription(),
                 dto.getType(),
                 Sede.valueOf(dto.getLocation()),
                 dto.getBrand(),
-                ResourceStatus.valueOf(dto.getStatus().toString()));
+                ResourceStatus.valueOf(dto.getStatus().name())
+        );
     }
 }

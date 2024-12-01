@@ -1,5 +1,6 @@
 package co.cue.edu.ticventory.ticventory.auth.model;
 
+
 import co.cue.edu.ticventory.ticventory.auth.domain.AuthRole;
 
 public class User {
@@ -16,7 +17,6 @@ public class User {
     }
 
     // Getters and Setters
-
     public String getId() {
         return id;
     }
