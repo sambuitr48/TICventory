@@ -33,6 +33,15 @@ public class InventoryController {
         }
         return ResponseEntity.ok(resourceDTO);
     }
+    @GetMapping("/resources/{id}")
+    public ResponseEntity<ResourceDTO> getResourceById(@PathVariable String id) {
+        ResourceDTO resource = inventoryService.getResource(id);
+        if (resource == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(resource);
+    }
+
 
     @DeleteMapping("/delete/{code}")
     public ResponseEntity<String> deleteResource(@PathVariable String code) {

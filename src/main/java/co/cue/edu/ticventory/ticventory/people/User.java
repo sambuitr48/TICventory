@@ -1,49 +1,42 @@
 package co.cue.edu.ticventory.ticventory.people;
 
-/**
- * Clase que representa a un usuario dentro del sistema, que extiende la clase Person.
- * Un usuario tiene un tipo asociado y una facultad, además de los atributos heredados de la clase Person.
- */
-public class User extends Person {
+public class User {
+    private String id;
+    private String username;
+    private String role; // Puede ser String, o usa un enum similar a `AuthRole`
 
-    // Atributo que define el tipo de usuario (por ejemplo, estudiante, docente, etc.)
-    private UserType userType;
+    // Constructor vacío
+    public User() {}
 
-    // Atributo que define la facultad a la que pertenece el usuario
-    private Facultades facultad;
-
-    /**
-     * Constructor que inicializa los atributos de la clase User.
-     *
-     * @param nombre El nombre del usuario.
-     * @param documentoIdentidad El documento de identidad del usuario.
-     * @param correo El correo electrónico del usuario.
-     * @param telefono El número de teléfono del usuario.
-     * @param estado El estado del usuario (por ejemplo, activo o inactivo).
-     * @param userType El tipo de usuario (ej. estudiante, docente).
-     * @param facultad La facultad a la que pertenece el usuario.
-     */
-    public User(String nombre, String documentoIdentidad, String correo, long telefono, int estado, UserType userType, Facultades facultad) {
-        super(nombre, documentoIdentidad, correo, telefono, estado); // Llamada al constructor de la clase base Person
-        this.userType = userType;
-        this.facultad = facultad;
+    // Constructor completo
+    public User(String id, String username, String role) {
+        this.id = id;
+        this.username = username;
+        this.role = role;
     }
 
-    /**
-     * Obtiene el tipo de usuario.
-     *
-     * @return El tipo de usuario (por ejemplo, estudiante, docente).
-     */
-    public UserType getTipoUsuario() {
-        return userType;
+    // Getters y Setters
+    public String getId() {
+        return id;
     }
 
-    /**
-     * Obtiene la facultad a la que pertenece el usuario.
-     *
-     * @return La facultad del usuario.
-     */
-    public Facultades getFacultad() {
-        return facultad;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

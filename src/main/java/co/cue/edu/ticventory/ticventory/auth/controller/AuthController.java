@@ -1,6 +1,9 @@
 package co.cue.edu.ticventory.ticventory.auth.controller;
 
 import co.cue.edu.ticventory.ticventory.auth.dto.UserDTO;
+import co.cue.edu.ticventory.ticventory.auth.mapper.UserMapper;
+import co.cue.edu.ticventory.ticventory.auth.model.User;
+import co.cue.edu.ticventory.ticventory.auth.repository.UserRepository;
 import co.cue.edu.ticventory.ticventory.auth.service.AuthFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +16,13 @@ import java.util.*;
 public class AuthController {
 
     private final AuthFacade authFacade;
+    private final UserRepository userRepository;
     private final Map<String, String> sessionTokens = new HashMap<>(); // Simula las sesiones de los usuarios
 
     @Autowired
-    public AuthController(AuthFacade authFacade) {
+    public AuthController(AuthFacade authFacade,  UserRepository userRepository) {
         this.authFacade = authFacade;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/register")
@@ -56,6 +61,18 @@ public class AuthController {
         List<UserDTO> users = authFacade.listUsers();
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(UserMapper.toDTO(user.get()));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
 
     // Métodos de soporte
 
