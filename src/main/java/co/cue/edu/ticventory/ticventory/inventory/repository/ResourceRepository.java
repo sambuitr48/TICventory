@@ -1,30 +1,17 @@
 package co.cue.edu.ticventory.ticventory.inventory.repository;
 
 import co.cue.edu.ticventory.ticventory.inventory.model.Resource;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
-public class ResourceRepository {
-    private final Map<String, Resource> resourceStorage = new HashMap<>();
+public interface ResourceRepository extends MongoRepository<Resource, String> {
 
-    public void save(Resource resource) {
-        resourceStorage.put(resource.getCode(), resource);
-    }
+    // Método para encontrar un recurso por código
+    Resource findByCode(String code);
 
-    public Resource findByCode(String code) {
-        return resourceStorage.get(code);
-    }
-
-    public void delete(Resource resource) {
-        resourceStorage.remove(resource.getCode());
-    }
-
-    public List<Resource> findAll() {
-        return resourceStorage.values().stream().collect(Collectors.toList());
-    }
+    // delete personalizado. MongoRepository tiene deleteById y deleteByCode.
+    void deleteByCode(String code);  // Método para eliminar por código
 }

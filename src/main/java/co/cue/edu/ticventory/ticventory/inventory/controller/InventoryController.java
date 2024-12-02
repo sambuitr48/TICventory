@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/inventory")
+@RequestMapping("/resources")
 public class InventoryController {
 
     private final InventoryService inventoryService;
@@ -19,39 +19,31 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addResource(@RequestBody ResourceDTO resourceDTO) {
+    // Agregar un recurso
+    @PostMapping
+    public ResponseEntity<Void> addResource(@RequestBody ResourceDTO resourceDTO) {
         inventoryService.addResource(resourceDTO);
-        return ResponseEntity.ok("Resource added successfully.");
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get/{code}")
+    // Obtener recurso por código
+    @GetMapping("/{code}")
     public ResponseEntity<ResourceDTO> getResource(@PathVariable String code) {
         ResourceDTO resourceDTO = inventoryService.getResource(code);
-        if (resourceDTO == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(resourceDTO);
-    }
-    @GetMapping("/resources/{id}")
-    public ResponseEntity<ResourceDTO> getResourceById(@PathVariable String id) {
-        ResourceDTO resource = inventoryService.getResource(id);
-        if (resource == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(resource);
+        return resourceDTO != null ? ResponseEntity.ok(resourceDTO) : ResponseEntity.notFound().build();
     }
 
-
-    @DeleteMapping("/delete/{code}")
-    public ResponseEntity<String> deleteResource(@PathVariable String code) {
-        inventoryService.deleteResource(code);
-        return ResponseEntity.ok("Resource deleted successfully.");
-    }
-
-    @GetMapping("/list")
-    public ResponseEntity<List<ResourceDTO>> listResources() {
+    // Obtener todos los recursos
+    @GetMapping
+    public ResponseEntity<List<ResourceDTO>> getAllResources() {
         List<ResourceDTO> resources = inventoryService.getAllResources();
         return ResponseEntity.ok(resources);
+    }
+
+    // Eliminar recurso por código
+    @DeleteMapping("/{code}")
+    public ResponseEntity<Void> deleteResource(@PathVariable String code) {
+        inventoryService.deleteResource(code);
+        return ResponseEntity.ok().build();
     }
 }

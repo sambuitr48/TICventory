@@ -19,23 +19,24 @@ public class InventoryService {
         this.resourceRepository = resourceRepository;
     }
 
+    // Agregar un recurso
     public void addResource(ResourceDTO resourceDTO) {
         Resource resource = ResourceMapper.toEntity(resourceDTO);
-        resourceRepository.save(resource);
+        resourceRepository.save(resource);  // MongoDB persistirá el recurso
     }
 
+    // Obtener recurso por código
     public ResourceDTO getResource(String code) {
-        Resource resource = resourceRepository.findByCode(code);
+        Resource resource = resourceRepository.findByCode(code);  // Consulta por código
         return resource != null ? ResourceMapper.toDTO(resource) : null;
     }
 
+    // Eliminar recurso por código
     public void deleteResource(String code) {
-        Resource resource = resourceRepository.findByCode(code);
-        if (resource != null) {
-            resourceRepository.delete(resource);
-        }
+        resourceRepository.deleteByCode(code);  // Elimina por código
     }
 
+    // Obtener todos los recursos
     public List<ResourceDTO> getAllResources() {
         return resourceRepository.findAll().stream().map(ResourceMapper::toDTO).toList();
     }

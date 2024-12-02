@@ -3,12 +3,14 @@ package co.cue.edu.ticventory.ticventory.inventory.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ResourceType {
+
     @JsonProperty("nombre")
     private String nombre;
 
     @JsonProperty("descripcion")
     private String descripcion;
 
+    // Constructor
     public ResourceType(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
