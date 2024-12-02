@@ -5,58 +5,28 @@ import java.util.List;
 
 public class LoanDTO {
     private Long id;
+    private String requester; // ID del solicitante (usuario)
+    private List<String> resources; // Lista de IDs de recursos
+    private LocalDate loanDate;
+    private LocalDate returnDate;
+    private String state; // Estado del préstamo
 
-    private String solicitante;
-    private List<String> recursos;
-    private LocalDate fechaPrestamo;
-    private LocalDate fechaDevolucion;
-    private String estado;
+    // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getRequester() { return requester; }
+    public void setRequester(String requester) { this.requester = requester; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public List<String> getResources() { return resources; }
+    public void setResources(List<String> resources) { this.resources = resources; }
 
-    public String getSolicitante() {
-        return solicitante;
-    }
+    public LocalDate getLoanDate() { return loanDate; }
+    public void setLoanDate(LocalDate loanDate) { this.loanDate = loanDate; }
 
-    public void setSolicitante(String solicitante) {
-        this.solicitante = solicitante;
-    }
+    public LocalDate getReturnDate() { return returnDate; }
+    public void setReturnDate(LocalDate returnDate) { this.returnDate = returnDate; }
 
-    public List<String> getRecursos() {
-        return recursos;
-    }
-
-    public void setRecursos(List<String> recursos) {
-        this.recursos = recursos;
-    }
-
-    public LocalDate getFechaPrestamo() {
-        return fechaPrestamo;
-    }
-
-    public void setFechaPrestamo(LocalDate fechaPrestamo) {
-        this.fechaPrestamo = fechaPrestamo;
-    }
-
-    public LocalDate getFechaDevolucion() {
-        return fechaDevolucion;
-    }
-
-    public void setFechaDevolucion(LocalDate fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
 }

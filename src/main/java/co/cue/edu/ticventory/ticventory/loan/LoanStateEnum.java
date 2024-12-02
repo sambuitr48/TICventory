@@ -1,4 +1,7 @@
 package co.cue.edu.ticventory.ticventory.loan;
+
+import co.cue.edu.ticventory.ticventory.loan.model.Loan;
+
 /**
  * La clase `LoanState` enumera los posibles estados de un préstamo.
  * Cada estado está asociado con un código de estado entero, que es útil para realizar operaciones
@@ -6,9 +9,8 @@ package co.cue.edu.ticventory.ticventory.loan;
  */
 public enum LoanStateEnum {
     PRESTADO(0),
-    DVUELTO(1),
-    RETRASADO(2),
-    CANCELADO(3);
+    DEVUELTO(1),
+    RETRASADO(2);
 
     private final int stateCode;
 
@@ -20,12 +22,7 @@ public enum LoanStateEnum {
         return stateCode;
     }
 
-    public static LoanStateEnum fromInt(int i) {
-        for (LoanStateEnum state : LoanStateEnum.values()) {
-            if (state.getStateCode() == i) {
-                return state;
-            }
-        }
-        return null;
+    public void handle(Loan loan) {
     }
 }
+
