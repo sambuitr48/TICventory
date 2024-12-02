@@ -10,9 +10,14 @@ import co.cue.edu.ticventory.ticventory.notification.models.NotificationType;
  *   y generar un mensaje final basado en ese tipo.
  *
  * **Patrón aplicado: Factory Support**
- * - Esta clase sirve como una plantilla que puede ser utilizada por el patrón Factory
+ * - Esta clase sirve como una plantilla que puede ser utilizada por el patrón **Factory**
  *   para crear mensajes de notificación dinámicos en base a su tipo.
  * - Además, permite extender la lógica de generación de mensajes en función del tipo de notificación.
+ *
+ * **Uso en el sistema:**
+ * - Puede ser utilizada para crear mensajes específicos para diferentes tipos de notificación,
+ *   lo cual simplifica la lógica de creación de mensajes.
+ * - Facilita la modificación o extensión de la lógica de mensajes sin cambiar las clases que generan las notificaciones.
  */
 public class MessageTemplate {
 
