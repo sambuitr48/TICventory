@@ -5,90 +5,81 @@ import co.cue.edu.ticventory.ticventory.notification.mapping.NotificationRequest
 import co.cue.edu.ticventory.ticventory.notification.models.Notification;
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationLog;
 import co.cue.edu.ticventory.ticventory.notification.repository.NotificationLogRepository;
+import co.cue.edu.ticventory.ticventory.notification.exceptions.NotificationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * **Clase NotificationService**
- *
- * - Proporciona la lógica de negocio principal para el envío de notificaciones y el manejo de su historial.
- *
- * **Patrones aplicados:**
- * - **Factory Method:** Utiliza `NotificationSenderFactory` para obtener el enviador adecuado según el canal.
- * - **Builder:** Usa `Notification.Builder` para construir instancias de `Notification` de manera controlada.
- * - **Repository:** Interactúa con `NotificationLogRepository` para manejar el almacenamiento y recuperación de registros.
- *
- * **Uso en el sistema:**
- * - Esta clase es invocada por el controlador `NotificationController` para manejar las operaciones relacionadas con las notificaciones.
- */
 @Service
 public class NotificationService {
 
-    // Repositorio para manejar los registros de notificaciones
     private final NotificationLogRepository logRepository;
 
-    /**
-     * **Constructor**
-     *
-     * - Recibe el repositorio como una dependencia inyectada por Spring.
-     * - **Principio SOLID:** Dependency Inversion Principle (DIP).
-     *   - Depende de una abstracción (`NotificationLogRepository`) en lugar de una implementación concreta.
-     */
     public NotificationService(NotificationLogRepository logRepository) {
         this.logRepository = logRepository;
     }
 
     /**
-     * **Método sendNotification**
+     * **Método para enviar una notificación**
      *
-     * - Gestiona el proceso completo de envío de una notificación.
-     * - Aplica varios patrones de diseño:
-     *   - **Builder:** Para construir la instancia de `Notification`.
-     *   - **Factory Method:** Para obtener el enviador adecuado según el canal.
-     *   - **Repository:** Para registrar la notificación en el historial.
+     * Este método crea una notificación basada en la información del request,
+     * la envía a través del canal adecuado y guarda un registro del envío en el repositorio.
      *
-     * @param request Objeto `NotificationRequest` que contiene los datos de la notificación.
+     * **Excepciones:**
+     * Lanza una `NotificationException` si ocurre algún error en el proceso de envío o registro de la notificación.
+     *
+     * @param request Información de la notificación a enviar.
+     * @throws NotificationException Si ocurre un error en el envío de la notificación o el guardado del log.
      */
-    public void sendNotification(NotificationRequest request) {
-        // **Patrón: Builder**
-        // Construye una instancia de `Notification` utilizando el Builder para evitar constructores complejos.
-        Notification notification = new Notification.Builder()
-                .date(new java.util.Date())
-                .recipient(request.getRecipient())
-                .message(request.getMessage())
-                .notificationType(request.getNotificationType())
-                .channel(request.getChannel())
-                .build();
+    public void sendNotification(NotificationRequest request) throws NotificationException {
+        try {
+            // Crear la notificación
+            Notification notification = new Notification.Builder()
+                    .date(new java.util.Date())
+                    .recipient(request.getRecipient())
+                    .message(request.getMessage())
+                    .notificationType(request.getNotificationType())
+                    .channel(request.getChannel())
+                    .build();
 
-        // **Patrón: Factory Method**
-        // Obtiene el enviador correspondiente según el canal especificado en la solicitud.
-        var sender = NotificationSenderFactory.getSender(request.getChannel());
-        sender.send(notification.getMessage(), notification.getRecipient());
+            // Asegurarse de que el documentId sea un String
+            String documentId = String.valueOf(notification.getRecipient().getDocumentId()); // Convertir el documentId a String
 
-        // **Patrón: Repository**
-        // Crea un registro de la notificación y lo guarda en el repositorio.
-        NotificationLog log = new NotificationLog(
-                notification.getMessage(),
-                notification.getNotificationType().toString(),
-                notification.getChannel().toString(),
-                notification.getRecipient().getName(),
-                notification.getRecipient().getDocumentId(),
-                notification.getDate()
-        );
+            // Enviar la notificación usando el sender adecuado
+            var sender = NotificationSenderFactory.getSender(request.getChannel());
+            sender.send(notification.getMessage(), notification.getRecipient());
 
-        logRepository.save(log); // Guarda el registro en el repositorio.
+            // Crear el log de la notificación
+            NotificationLog log = new NotificationLog(
+                    notification.getMessage(),
+                    notification.getNotificationType().toString(),
+                    notification.getChannel().toString(),
+                    notification.getRecipient().getName(),
+                    documentId,  // Usamos el documentId como String
+                    notification.getDate()
+            );
+
+            // Guardar el log
+            logRepository.save(log);
+        } catch (Exception ex) {
+            // Lanzamos una NotificationException con el mensaje y la causa
+            throw new NotificationException("Error al enviar la notificación: " + ex.getMessage(), ex);
+        }
     }
 
     /**
-     * **Método getNotificationHistory**
+     * **Método para obtener el historial de notificaciones**
      *
-     * - Recupera el historial completo de notificaciones registradas.
-     * - **Patrón aplicado:** Repository.
-     *   - Delegación de la lógica de almacenamiento y recuperación al repositorio `NotificationLogRepository`.
+     * Este método recupera todos los registros de notificaciones almacenados.
      *
+     * @return Lista de registros de notificaciones.
+     * @throws NotificationException Si ocurre un error al recuperar el historial de notificaciones.
      */
-    public List<NotificationLog> getNotificationHistory() {
-        return logRepository.findAll();
+    public List<NotificationLog> getNotificationHistory() throws NotificationException {
+        try {
+            return logRepository.findAll();
+        } catch (Exception ex) {
+            throw new NotificationException("Error al obtener el historial de notificaciones: " + ex.getMessage(), ex);
+        }
     }
 }
