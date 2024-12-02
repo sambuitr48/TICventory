@@ -20,6 +20,10 @@ public class Resource {
         this.state = state;
     }
 
+    public Resource() {
+
+    }
+
     public String getCode() { return code; }
     public String getDescription() { return description; }
     public ResourceType getResourceType() { return resourceType; }
