@@ -1,33 +1,41 @@
 package co.cue.edu.ticventory.ticventory.notification.mapping;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import co.cue.edu.ticventory.ticventory.people.ConcretePerson;
-import co.cue.edu.ticventory.ticventory.notification.models.NotificationType;
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationChannel;
-/**
- * Clase que implementa el patrón Observer para notificaciones.
- */
+import co.cue.edu.ticventory.ticventory.notification.models.NotificationType;
+import co.cue.edu.ticventory.ticventory.notification.models.Recipient;
+
+// **Clase: NotificationRequest**
+// **Patrón aplicado: DTO (Data Transfer Object)**
+// Esta clase actúa como un contenedor de datos para transportar información
+// desde la capa de presentación (el cliente) hacia el sistema.
+// Facilita la transferencia de datos entre las capas sin exponer modelos internos directamente.
 public class NotificationRequest {
 
-    @JsonProperty("recipient")
-    private ConcretePerson recipient;
+    // **Atributo: recipient**
+    // Representa al destinatario de la notificación.
+    private Recipient recipient;
 
-    @JsonProperty("message")
+    // **Atributo: message**
+    // Contiene el mensaje que se enviará al destinatario.
     private String message;
 
-    @JsonProperty("notificationType")
+    // **Atributo: notificationType**
+    // Especifica el tipo de notificación (por ejemplo, PRESTAMO, ALERTA).
     private NotificationType notificationType;
 
-    @JsonProperty("channel")
+    // **Atributo: channel**
+    // Indica el canal de notificación a usar (EMAIL, SMS, PUSH).
     private NotificationChannel channel;
 
-    // Getters y Setters
+    // **Getters y Setters**
+    // Los métodos de acceso permiten que los datos sean leídos y modificados
+    // sin exponer directamente los atributos internos de la clase.
 
-    public ConcretePerson getRecipient() {
+    public Recipient getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(ConcretePerson recipient) {
+    public void setRecipient(Recipient recipient) {
         this.recipient = recipient;
     }
 
