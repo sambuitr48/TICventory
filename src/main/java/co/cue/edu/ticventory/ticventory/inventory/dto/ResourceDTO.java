@@ -11,6 +11,10 @@ public class ResourceDTO {
     private String brand;
     private ResourceStatus status;
 
+    public ResourceDTO(String code123, String testResource, Object o, Object o1, Object o2, Object o3) {
+
+    }
+
     // Getters and Setters
     public String getCode() { return code; }
     public void setCode(String code) { this.code = code; }
