@@ -1,11 +1,13 @@
 package co.cue.edu.ticventory.ticventory;
 
+import co.cue.edu.ticventory.ticventory.notification.exceptions.NotificationException;
 import co.cue.edu.ticventory.ticventory.notification.mapping.NotificationRequest;
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationChannel;
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationLog;
 import co.cue.edu.ticventory.ticventory.notification.models.Recipient;
 import co.cue.edu.ticventory.ticventory.notification.repository.NotificationLogRepository;
 import co.cue.edu.ticventory.ticventory.notification.services.NotificationService;
+import co.cue.edu.ticventory.ticventory.notification.models.NotificationType;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,7 +43,7 @@ class NotificationServiceTest {
         NotificationRequest request = new NotificationRequest();
         request.setMessage("Mensaje de prueba");
         request.setChannel(NotificationChannel.EMAIL); // Usamos el tipo correcto (NotificationChannel)
-        request.setNotificationType(NotificationType.EMAIL); // Establecemos el tipo de notificación
+        request.setNotificationType(NotificationType.PRESTAMO); // Establecemos el tipo de notificación
 
         // Asegurarse de crear un destinatario válido (suponiendo que 'Recipient' tiene un constructor que acepta un email)
         Recipient recipient = new Recipient("Juan Pérez", "1234", "test@example.com", "123456789");
@@ -80,7 +82,7 @@ class NotificationServiceTest {
      * Prueba para el caso exitoso del método getNotificationHistory.
      */
     @Test
-    void testGetNotificationHistorySuccess() {
+    void testGetNotificationHistorySuccess() throws NotificationException {
         // Configuración de datos simulados
         List<NotificationLog> mockLogs = new ArrayList<>();
         mockLogs.add(new NotificationLog(

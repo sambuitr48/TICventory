@@ -2,6 +2,7 @@ package co.cue.edu.ticventory.ticventory;
 
 // Importaciones necesarias para realizar las pruebas
 import co.cue.edu.ticventory.ticventory.notification.controllers.NotificationController;
+import co.cue.edu.ticventory.ticventory.notification.exceptions.NotificationException;
 import co.cue.edu.ticventory.ticventory.notification.mapping.NotificationRequest;
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationLog;
 import co.cue.edu.ticventory.ticventory.notification.services.NotificationService;
@@ -44,7 +45,7 @@ class NotificationControllerTest {
      * Se verifica que el controlador llame al servicio correctamente y devuelva una respuesta 200.
      */
     @Test
-    void testSendNotificationSuccess() {
+    void testSendNotificationSuccess() throws NotificationException {
         // Configuración del mock: no hace nada cuando se llama al servicio
         NotificationRequest request = new NotificationRequest();
         doNothing().when(notificationService).sendNotification(request);
@@ -66,7 +67,7 @@ class NotificationControllerTest {
      * Se verifica que el controlador maneje correctamente una excepción lanzada por el servicio.
      */
     @Test
-    void testSendNotificationError() {
+    void testSendNotificationError() throws NotificationException {
         // Configuración del mock: el servicio lanza una excepción
         NotificationRequest request = new NotificationRequest();
         doThrow(new RuntimeException("Error al enviar notificación"))
@@ -89,15 +90,15 @@ class NotificationControllerTest {
      * Se verifica que el controlador devuelva correctamente el historial de notificaciones.
      */
     @Test
-    void testGetNotificationHistorySuccess() {
+    void testGetNotificationHistorySuccess() throws NotificationException {
         // Configuración del mock: el servicio devuelve una lista de logs simulados
         List<NotificationLog> mockLogs = new ArrayList<>();
         mockLogs.add(new NotificationLog("Mensaje 1", "PRESTAMO", "EMAIL", "Juan Pérez", "123456", new java.util.Date()));
         when(notificationService.getNotificationHistory()).thenReturn(mockLogs);
 
-        // Llamada al método del controlador
-        List<NotificationLog> logs = notificationController.getNotificationHistory();
 
+// Llamada al método del controlador
+        List<NotificationLog> logs = (List<NotificationLog>) notificationController.getNotificationHistory();
         // Verificaciones:
         // - La lista devuelta debe tener un elemento
         assertEquals(1, logs.size());
@@ -112,7 +113,7 @@ class NotificationControllerTest {
      * Se verifica que el controlador maneje correctamente una excepción lanzada por el servicio.
      */
     @Test
-    void testGetNotificationHistoryError() {
+    void testGetNotificationHistoryError() throws NotificationException {
         // Configuración del mock: el servicio lanza una excepción
         when(notificationService.getNotificationHistory()).thenThrow(new RuntimeException("Error al obtener historial"));
 
