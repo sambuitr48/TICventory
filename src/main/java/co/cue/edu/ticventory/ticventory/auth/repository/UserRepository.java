@@ -15,3 +15,4 @@ public interface UserRepository {
     void delete(String id);
     List<User> findAll();
 }
+
