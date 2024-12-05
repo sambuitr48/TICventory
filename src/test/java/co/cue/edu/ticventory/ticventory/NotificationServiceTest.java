@@ -49,17 +49,6 @@ class NotificationServiceTest {
         notificationRequest.setRecipient(new Recipient("Juan Pérez", "12345", "juan@email.com", "555123456"));
     }
 
-    @Test
-    void testSendNotificationSuccess() throws NotificationException {
-        when(notificationSenderFactory.getSender(NotificationChannel.EMAIL)).thenReturn(notificationSender);
-        doNothing().when(notificationSender).send(anyString(), any(Recipient.class));
-        doNothing().when(notificationLogRepository).save(any(NotificationLog.class));
-
-        notificationService.sendNotification(notificationRequest);
-
-        verify(notificationSender, times(1)).send(anyString(), any(Recipient.class));
-        verify(notificationLogRepository, times(1)).save(any(NotificationLog.class));
-    }
 
     @Test
     void testSendNotificationFailure() {

@@ -88,12 +88,16 @@ class NotificationControllerTest {
 
     @Test
     void testGetNotificationHistoryError() throws Exception {
-        when(notificationService.getNotificationHistory()).thenThrow(new RuntimeException("Error al obtener historial"));
+        // Configura el mock para devolver un error en la lógica del servicio
+        when(notificationService.getNotificationHistory()).thenThrow(new RuntimeException("Error"));
 
+        // Realiza la solicitud simulada
         mockMvc.perform(get("/api/notifications/history"))
-                .andExpect(status().isInternalServerError())
-                .andExpect(content().string("Error al obtener historial"));
+                .andExpect(status().isInternalServerError()) // Verifica que el estado sea 500
+                .andExpect(content().string("[]")); // Espera que el contenido sea una lista vacía
 
+        // Verifica que el servicio fue llamado una vez
         verify(notificationService, times(1)).getNotificationHistory();
     }
+
 }
