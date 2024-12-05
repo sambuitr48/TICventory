@@ -1,6 +1,8 @@
 package co.cue.edu.ticventory.ticventory;
 
 import co.cue.edu.ticventory.ticventory.notification.exceptions.NotificationException;
+
+import co.cue.edu.ticventory.ticventory.notification.mapping.NotificationRequest;
 import co.cue.edu.ticventory.ticventory.notification.interfaces.INotificationSender;
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationChannel;
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationType;
@@ -9,6 +11,7 @@ import co.cue.edu.ticventory.ticventory.notification.mapping.NotificationRequest
 import co.cue.edu.ticventory.ticventory.notification.models.NotificationLog;
 import co.cue.edu.ticventory.ticventory.notification.repository.NotificationLogRepository;
 import co.cue.edu.ticventory.ticventory.notification.services.NotificationService;
+import co.cue.edu.ticventory.ticventory.notification.models.NotificationType;
 import co.cue.edu.ticventory.ticventory.notification.factories.NotificationSenderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +55,19 @@ class NotificationServiceTest {
     }
 
     @Test
+    void testSendNotificationSuccess() {
+        // Configuración de datos válidos
+        NotificationRequest request = new NotificationRequest();
+        request.setMessage("Mensaje de prueba");
+        request.setChannel(NotificationChannel.EMAIL); // Usamos el tipo correcto (NotificationChannel)
+        request.setNotificationType(NotificationType.PRESTAMO); // Establecemos el tipo de notificación
+
+        // Asegurarse de crear un destinatario válido (suponiendo que 'Recipient' tiene un constructor que acepta un email)
+        Recipient recipient = new Recipient("Juan Pérez", "1234", "test@example.com", "123456789");
+        request.setRecipient(recipient); // Asignación correcta del destinatario
+
+        // Configurar el comportamiento del mock para que no haga nada al guardar el log
+
     void testSendNotification_success() {
         // Simula que el repositorio guarda la notificación correctamente
         doNothing().when(notificationLogRepository).save(any(NotificationLog.class));
@@ -90,6 +106,23 @@ class NotificationServiceTest {
     }
 
     @Test
+    void testGetNotificationHistorySuccess() throws NotificationException {
+        // Configuración de datos simulados
+        List<NotificationLog> mockLogs = new ArrayList<>();
+        mockLogs.add(new NotificationLog(
+                "Mensaje 1",
+                "ALERTA",
+                NotificationChannel.EMAIL.name(), // Canal como String
+                "Juan Pérez",
+                "123456",
+                new java.util.Date()
+        ));
+
+        // Configurar el comportamiento del mock
+        when(notificationLogRepository.findAll()).thenReturn(mockLogs);
+
+        // Llamar al método
+
     void testGetNotificationHistory_success() throws NotificationException {
         NotificationLog log = new NotificationLog("Mensaje de prueba", "PRESTAMO", "EMAIL", "Juan Pérez", "12345", new java.util.Date());
         List<NotificationLog> logs = Arrays.asList(log);
